@@ -48,8 +48,9 @@ ClosedCloudMerge::ClosedCloudMerge(const std::string & name) :
     ICP_max_iterations("ICP.Iterations",2000),
     RanSAC_inliers_threshold("RanSac.Inliers_threshold",0.01f),
     RanSAC_max_iterations("RanSac.Iterations",2000),
-	threshold("threshold", 5),
-	maxIterations("Interations.Max", 5)
+	viewsNumber("Views.Number", 5),
+	maxIterations("Interations.Max", 5),
+	corrTreshold("Correspondences.Treshold", 10)
 {
     registerProperty(prop_ICP_alignment);
     registerProperty(prop_ICP_alignment_normal);
@@ -60,7 +61,8 @@ ClosedCloudMerge::ClosedCloudMerge(const std::string & name) :
     registerProperty(RanSAC_inliers_threshold);
     registerProperty(RanSAC_max_iterations);
 	registerProperty(maxIterations);
-	registerProperty(threshold);
+	registerProperty(viewsNumber);
+	registerProperty(corrTreshold);
 
 	properties.ICP_transformation_epsilon = ICP_transformation_epsilon;
 	properties.ICP_max_iterations = ICP_max_iterations;
@@ -152,7 +154,7 @@ void ClosedCloudMerge::addViewToModel()
 
 	counter++;
 
-		if (counter > threshold) {
+		if (counter > viewsNumber) {
 			lum_sift.setMaxIterations(maxIterations);
 			lum_sift.compute();
 			cloud_sift_merged = lum_sift.getConcatenatedCloud ();
@@ -160,7 +162,7 @@ void ClosedCloudMerge::addViewToModel()
 			CLOG(LINFO) << "cloud_merged from LUM ";
 			//*cloud_merged = *(rgb_views[0]);
 			*cloud_normal_merged = *(rgb_views[0]);
-			for (int i = 1 ; i < threshold; i++)
+			for (int i = 1 ; i < viewsNumber; i++)
 			{
 //				pcl::PointCloud<pcl::PointXYZRGB> tmp = *(rgb_views[i]);
 				pcl::PointCloud<pcl::PointXYZRGBNormal> tmp = *(rgb_views[i]);
@@ -247,18 +249,20 @@ void ClosedCloudMerge::addViewToModel()
 		pcl::CorrespondencesPtr correspondences3(new pcl::Correspondences()) ;
 		MergeUtils::computeTransformationSAC(lum_sift.getPointCloud(counter - 1), lum_sift.getPointCloud(i), correspondences2, *correspondences3, properties) ;
 		//cortab[counter-1][i] = inliers2;
-		if (correspondences3->size() > 10) {
+		if (correspondences3->size() > corrTreshold) {
 			lum_sift.setCorrespondences(counter-1, i, correspondences3);
 			added++;
 			// Compute multiplicity of features (designating how many multiplicity given feature appears in all views).
-//			for(int j = 0; i< correspondences3->size();j++){
-//				if (correspondences3->at(i).index_query >=lum_sift.getPointCloud(counter - 1)->size() || correspondences3->at(i).index_match >=lum_sift.getPointCloud(i)->size()){
-//					continue;
-//				}
-//				//
-//				lum_sift.getPointCloud(counter - 1)->at(correspondences3->at(i).index_query).multiplicity = lum_sift.getPointCloud(i)->at(correspondences3->at(i).index_match).multiplicity + 1;
-//				lum_sift.getPointCloud(i)->at(correspondences3->at(i).index_match).multiplicity=-1;
-//			}
+			for(int j = 0; j< correspondences3->size();j++){
+				if (correspondences3->at(j).index_query >=lum_sift.getPointCloud(counter - 1)->size() || correspondences3->at(j).index_match >=lum_sift.getPointCloud(i)->size()){
+					continue;
+				}
+				if (lum_sift.getPointCloud(i)->at(correspondences3->at(j).index_match).multiplicity != -1) {
+					lum_sift.getPointCloud(counter - 1)->at(correspondences3->at(j).index_query).multiplicity = lum_sift.getPointCloud(i)->at(correspondences3->at(j).index_match).multiplicity + 1;
+					lum_sift.getPointCloud(i)->at(correspondences3->at(j).index_match).multiplicity=-1;
+				} else
+					lum_sift.getPointCloud(counter - 1)->at(correspondences3->at(j).index_query).multiplicity += 1;
+			}
 		}
 	//break;
 	//CLOG(LINFO) << "computet for "<<counter-1 <<" and "<< i << "  correspondences2: " << correspondences2->size() << " out of " << correspondences2->size();
