@@ -23,37 +23,37 @@
 					<param name="">2</param>
 				</Component>
 				<Component name="SequenceRGB" type="CvBasic:Sequence" priority="3" bump="0">
-					<param name="sequence.directory">/home/mkamionk/DisCODe/RGB-D/kinect/1</param>
+					<param name="sequence.directory">/home/mkamionk/DisCODe/RGB-D/RZ</param>
 					<param name="sequence.pattern">.*\_rgb.png</param>
 					<param name="mode.loop">0</param>
 					<param name="mode.auto_trigger">0</param>		
 				</Component>
 	                       <Component name="SequenceXYZ" type="CvBasic:Sequence" priority="4" bump="0">
-					<param name="sequence.directory">/home/mkamionk/DisCODe/RGB-D/kinect/1</param>
+					<param name="sequence.directory">/home/mkamionk/DisCODe/RGB-D/RZ</param>
                                         <param name="sequence.pattern">.*\_xyz\.yml</param>
                                         <param name="mode.loop">1</param>
                                         <param name="mode.auto_trigger">0</param>
                                 </Component>
 				<Component name="SequenceMask" type="CvBasic:Sequence" priority="5" bump="0">
-					<param name="sequence.directory">/home/mkamionk/DisCODe/RGB-D/kinect/1</param>
+					<param name="sequence.directory">/home/mkamionk/DisCODe/RGB-D/RZ</param>
 					<param name="sequence.pattern">.*\_mask.png</param>
 					<param name="mode.loop">0</param>
 					<param name="mode.auto_trigger">0</param>
 				</Component>
 				<Component name="SequenceRGB2" type="CvBasic:Sequence" priority="6" bump="0">
-					<param name="sequence.directory">/home/mkamionk/DisCODe/RGB-D/kinect/1</param>
+					<param name="sequence.directory">/home/mkamionk/DisCODe/RGB-D/RZ</param>
 					<param name="sequence.pattern">.*\_rgb.png</param>
 					<param name="mode.loop">0</param>
 					<param name="mode.auto_trigger">0</param>
 				</Component>
 	                       <Component name="SequenceXYZ2" type="CvBasic:Sequence" priority="7" bump="0">
-					<param name="sequence.directory">/home/mkamionk/DisCODe/RGB-D/kinect/1</param>
+					<param name="sequence.directory">/home/mkamionk/DisCODe/RGB-D/RZ</param>
                                         <param name="sequence.pattern">.*\_xyz\.yml</param>
                                         <param name="mode.loop">1</param>
                                         <param name="mode.auto_trigger">0</param>
                                 </Component>
 				<Component name="SequenceMask2" type="CvBasic:Sequence" priority="8" bump="0">
-					<param name="sequence.directory">/home/mkamionk/DisCODe/RGB-D/kinect/1</param>
+					<param name="sequence.directory">/home/mkamionk/DisCODe/RGB-D/RZ</param>
 					<param name="sequence.pattern">.*\_mask.png</param>
 					<param name="mode.loop">0</param>
 					<param name="mode.auto_trigger">0</param>
@@ -88,7 +88,7 @@
 				<Component name="FeatureCloudConverter2" type="SIFTObjectModel:FeatureCloudConverter" priority="17" bump="0">
 				</Component>
 
-                		<Component name="Macher" type="SIFTObjectModel:CorrespondencMacher" priority="18" bump="1">
+                		<Component name="Macher" type="SIFTObjectModel:CorrespondenceMatcher" priority="18" bump="1">
 				</Component>
 			</Executor>
 

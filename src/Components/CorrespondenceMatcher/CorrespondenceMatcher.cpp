@@ -125,7 +125,7 @@ void CorrespondenceMatcher::mach()
 	CLOG(LINFO) << "  correspondences3: " << inliers->size() << " out of " << correspondences->size();
 //	pcl::transformPointCloud(*cloud_sec, *cloud_sec, current_trans);
 
-	out_correspondences.write(inliers);
+    out_correspondences.write(inliers);
 	out_cloud_first_xyzsift.write(cloud_first);
 	out_cloud_sec_xyzsift.write(cloud_sec);
 

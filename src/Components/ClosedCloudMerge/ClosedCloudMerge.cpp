@@ -203,6 +203,7 @@ void ClosedCloudMerge::addViewToModelNormals()
 	if (prop_visual_odometry)
 	{
 		transSAC = MergeUtils::computeTransformationSAC(cloud_sift, cloud_sift_merged, correspondences, inliers, properties);
+        if (transSAC == Eigen::Matrix4f::Identity())
 		{
 			CLOG(LINFO) << "cloud couldn't be merged";
 			counter--;
