@@ -14,8 +14,6 @@ ADD_COMPONENT(FeatureCloudConverter)
 
 ADD_COMPONENT(CloudCutter)
 
-ADD_COMPONENT(Downsampling)
-
 ADD_COMPONENT(PC2Octree)
 
 ADD_COMPONENT(ELECHGenerator)
@@ -24,27 +22,35 @@ ADD_COMPONENT(Visualization)
 
 ADD_COMPONENT(NormalEstimation)
 
-ADD_COMPONENT(CorrespondencesViewer)
-
 ADD_COMPONENT(SIFTClusterExtraction)
 
 ADD_COMPONENT(ClosedCloudMerge)
 
-#ADD_COMPONENT(OpenCloudMerge)
+ADD_COMPONENT(OpenCloudMerge)
 
 ADD_COMPONENT(SIFTNOMWriter)
 
 ADD_COMPONENT(SIFTNOMReader)
 
-ADD_COMPONENT(CloudViewer)
-
-ADD_COMPONENT(CorrespondenceMatcher)
-
 ADD_COMPONENT(PC2SOM)
+
+ADD_COMPONENT(SOMs2PC)
+
+ADD_COMPONENT(xyzrgb2xyzsift)
+
+ADD_COMPONENT(GaussCloud)
+
+ADD_COMPONENT(ProjectionGrouping)
 
 ADD_COMPONENT(VectorToSequence)
 
-#ADD_COMPONENT(CloudTransformer)
+ADD_COMPONENT(GreedyVerification)
 
-ADD_COMPONENT(GaussCloud)
+ADD_COMPONENT(Projection)
+
+ADD_COMPONENT(ConflictGraph)
+
+ADD_COMPONENT(GlobalHypothesesVerification)
+
+ADD_COMPONENT(ReprojectionError)
 

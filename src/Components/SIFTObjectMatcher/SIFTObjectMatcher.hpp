@@ -20,6 +20,8 @@
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
 #include <pcl/registration/correspondence_estimation.h>
+#include "Types/HomogMatrix.hpp"
+
 
 namespace Processors {
 namespace SIFTObjectMatcher {
@@ -80,19 +82,15 @@ protected:
 
 // Output data streams
 	Base::DataStreamOut<pcl::PointCloud<pcl::PointXYZRGB>::Ptr> out_cloud_xyzrgb;
-	Base::DataStreamOut<pcl::PointCloud<pcl::PointXYZRGB>::Ptr> out_cloud_xyzrgb_model;
+    Base::DataStreamOut<pcl::PointCloud<pcl::PointXYZRGB>::Ptr> out_cloud_xyzrgb_model;
 	Base::DataStreamOut<pcl::PointCloud<PointXYZSIFT>::Ptr> out_cloud_xyzsift;
 	Base::DataStreamOut<pcl::PointCloud<PointXYZSIFT>::Ptr> out_cloud_xyzsift_model;
-	Base::DataStreamOut<pcl::CorrespondencesPtr> out_correspondences;
+    Base::DataStreamOut<pcl::CorrespondencesPtr> out_correspondences;
     Base::DataStreamOut<pcl::CorrespondencesPtr> out_good_correspondences;
-    Base::DataStreamOut<std::vector<pcl::Correspondences> > out_clustered_correspondences;
-    Base::DataStreamOut<std::vector<Eigen::Matrix4f, Eigen::aligned_allocator<Eigen::Matrix4f> > > out_rototranslations;
-	// Handlers
-	Base::EventHandler2 h_readModels;
-	Base::EventHandler2 h_match;
+    Base::DataStreamOut<std::vector<pcl::CorrespondencesPtr> > out_clustered_correspondences;
+    Base::DataStreamOut<std::vector<Types::HomogMatrix> > out_poses;
 
-	
-	// Handlers
+    // Handlers
 	void readModels();
 	void match();
 
@@ -104,6 +102,8 @@ protected:
     Base::Property<float> cg_size;
     Base::Property<float> cg_thresh;
     Base::Property<bool> use_hough3d;
+
+    Base::Property<int> model_out;
 
 };
 
